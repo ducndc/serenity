@@ -8,7 +8,7 @@
 #include <AK/Error.h>
 #include <AK/HashTable.h>
 #if ARCH(X86_64)
-#    include <Kernel/Arch/x86_64/PCI/Controller/HostBridge.h>
+#include <Kernel/Arch/x86_64/PCI/Controller/HostBridge.h>
 #endif
 #include <Kernel/Bus/PCI/Access.h>
 #include <Kernel/Bus/PCI/Controller/MemoryBackedHostBridge.h>
@@ -217,6 +217,7 @@ void Access::write8_field(DeviceIdentifier const& identifier, u32 field, u8 valu
     auto& controller = *m_host_controllers.get(identifier.address().domain()).value();
     controller.write8_field(identifier.address().bus(), identifier.address().device(), identifier.address().function(), field, value);
 }
+
 void Access::write16_field(DeviceIdentifier const& identifier, u32 field, u16 value)
 {
     VERIFY(identifier.operation_lock().is_locked());
@@ -225,6 +226,7 @@ void Access::write16_field(DeviceIdentifier const& identifier, u32 field, u16 va
     auto& controller = *m_host_controllers.get(identifier.address().domain()).value();
     controller.write16_field(identifier.address().bus(), identifier.address().device(), identifier.address().function(), field, value);
 }
+
 void Access::write32_field(DeviceIdentifier const& identifier, u32 field, u32 value)
 {
     VERIFY(identifier.operation_lock().is_locked());
@@ -253,6 +255,7 @@ u8 Access::read8_field(DeviceIdentifier const& identifier, u32 field)
     auto& controller = *m_host_controllers.get(identifier.address().domain()).value();
     return controller.read8_field(identifier.address().bus(), identifier.address().device(), identifier.address().function(), field);
 }
+
 u16 Access::read16_field(DeviceIdentifier const& identifier, u32 field)
 {
     VERIFY(identifier.operation_lock().is_locked());
@@ -261,6 +264,7 @@ u16 Access::read16_field(DeviceIdentifier const& identifier, u32 field)
     auto& controller = *m_host_controllers.get(identifier.address().domain()).value();
     return controller.read16_field(identifier.address().bus(), identifier.address().device(), identifier.address().function(), field);
 }
+
 u32 Access::read32_field(DeviceIdentifier const& identifier, u32 field)
 {
     VERIFY(identifier.operation_lock().is_locked());

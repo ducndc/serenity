@@ -15,11 +15,13 @@ void write8_locked(DeviceIdentifier const& identifier, PCI::RegisterOffset field
     VERIFY(identifier.operation_lock().is_locked());
     Access::the().write8_field(identifier, to_underlying(field), value);
 }
+
 void write16_locked(DeviceIdentifier const& identifier, PCI::RegisterOffset field, u16 value)
 {
     VERIFY(identifier.operation_lock().is_locked());
     Access::the().write16_field(identifier, to_underlying(field), value);
 }
+
 void write32_locked(DeviceIdentifier const& identifier, PCI::RegisterOffset field, u32 value)
 {
     VERIFY(identifier.operation_lock().is_locked());
@@ -31,11 +33,13 @@ u8 read8_locked(DeviceIdentifier const& identifier, PCI::RegisterOffset field)
     VERIFY(identifier.operation_lock().is_locked());
     return Access::the().read8_field(identifier, to_underlying(field));
 }
+
 u16 read16_locked(DeviceIdentifier const& identifier, PCI::RegisterOffset field)
 {
     VERIFY(identifier.operation_lock().is_locked());
     return Access::the().read16_field(identifier, to_underlying(field));
 }
+
 u32 read32_locked(DeviceIdentifier const& identifier, PCI::RegisterOffset field)
 {
     VERIFY(identifier.operation_lock().is_locked());
@@ -58,6 +62,7 @@ void enable_io_space(DeviceIdentifier const& identifier)
     SpinlockLocker locker(identifier.operation_lock());
     write16_locked(identifier, PCI::RegisterOffset::COMMAND, read16_locked(identifier, PCI::RegisterOffset::COMMAND) | (1 << 0));
 }
+
 void disable_io_space(DeviceIdentifier const& identifier)
 {
     SpinlockLocker locker(identifier.operation_lock());
@@ -69,6 +74,7 @@ void enable_memory_space(DeviceIdentifier const& identifier)
     SpinlockLocker locker(identifier.operation_lock());
     write16_locked(identifier, PCI::RegisterOffset::COMMAND, read16_locked(identifier, PCI::RegisterOffset::COMMAND) | (1 << 1));
 }
+
 void disable_memory_space(DeviceIdentifier const& identifier)
 {
     SpinlockLocker locker(identifier.operation_lock());
@@ -191,26 +197,31 @@ static void write8_offsetted(DeviceIdentifier const& identifier, u32 field, u8 v
     VERIFY(identifier.operation_lock().is_locked());
     Access::the().write8_field(identifier, field, value);
 }
+
 static void write16_offsetted(DeviceIdentifier const& identifier, u32 field, u16 value)
 {
     VERIFY(identifier.operation_lock().is_locked());
     Access::the().write16_field(identifier, field, value);
 }
+
 static void write32_offsetted(DeviceIdentifier const& identifier, u32 field, u32 value)
 {
     VERIFY(identifier.operation_lock().is_locked());
     Access::the().write32_field(identifier, field, value);
 }
+
 static u8 read8_offsetted(DeviceIdentifier const& identifier, u32 field)
 {
     VERIFY(identifier.operation_lock().is_locked());
     return Access::the().read8_field(identifier, field);
 }
+
 static u16 read16_offsetted(DeviceIdentifier const& identifier, u32 field)
 {
     VERIFY(identifier.operation_lock().is_locked());
     return Access::the().read16_field(identifier, field);
 }
+
 static u32 read32_offsetted(DeviceIdentifier const& identifier, u32 field)
 {
     VERIFY(identifier.operation_lock().is_locked());
